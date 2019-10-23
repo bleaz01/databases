@@ -40,6 +40,6 @@ $valided ="";
 		<button type="submit" name="sign" class="btn btn-primary">Sign in</button>
 	</form>
 	<a href="register.php">register</a>
-
+	<?= $sql ?>
 
 <?php include "assets/include/footer.php" ?>

@@ -1,19 +1,35 @@
 <?php 
-	include"assets/include/db.php";
-	include "assets/include/header.php";
+	include"db.php";
 
 
 
 $username = $_POST['username'];
 $email = $_POST['email'];
 $password = $_POST['password'];
-$PasswordConf = $_POST['PasswordConf'];
+$passwordConf = $_POST['passwordConf'];
 $valid = 0;
 if (!$conn){
 		die("Connection failed: " . mysqli_connect_error());
 	}
 
 	if(isset($_POST['signup'])){
+		
+		//check  email and user if exist in databases
+
+		$sql = "SELECT  * FROM user WHERE username='".$username."' OR email='".$email."'limit 1";
+		//$sql = "SELECT  * FROM user WHERE username='".$username."' AND password='".$password."'limit 1";
+		echo $sql;
+
+		$result = mysqli_query($conn, $sql);
+		$resultcheck = mysqli_num_rows($result);
+		
+			if (!$resultcheck == 0){
+				$erreur= "pleas change login";
+				return;
+			} else {
+				$valid++;
+			} 
+
 		
 			//username
 			if(empty($username)){
@@ -54,25 +70,25 @@ if (!$conn){
 				}
 
 				//PasswordConf
-			if(empty($PasswordConf)){
-				$password_err="champ obligatoir";
+			if(empty($passwordConf)){
+				$passwordConf_err="champ obligatoir";
 				}
-			else if(!preg_match('/^(?=.*\d)(?=.*[A-Za-z])[0-9A-Za-z!@#$%]{8,12}$/',htmlspecialchars($PasswordConf))){
+			else if(!preg_match('/^(?=.*\d)(?=.*[A-Za-z])[0-9A-Za-z!@#$%]{8,12}$/',htmlspecialchars($passwordConf))){
 
 				$passwordConf_err="a password must be 9 characters including 1 uppercase letter, 
 									1 special character and alphanumeric characters?";
 
 			}
-			else if($PasswordConf != $password){
-				$PasswordConf_err="erreur password is not same";
+			else if($passwordConf != $password){
+				$passwordConf_err="erreur password is not same";
 			}
 			else{
-					$PasswordConf_err = "Password valid";
+					$passwordConf_err = "Password valid";
 					$valid++;
 				}
 }
 //validation tu fomulaire:
-if($valid == 4){
+if($valid == 5){
 	header("location: index.php");
 	
 		$_SESSION["key"] = $_POST;
