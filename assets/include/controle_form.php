@@ -5,7 +5,7 @@
 
 $username = $_POST['username'];
 $email = $_POST['email'];
-$password = $_POST['password'];
+$password = crypt($_POST['password']);
 $passwordConf = $_POST['passwordConf'];
 $valid = 0;
 if (!$conn){
@@ -17,8 +17,6 @@ if (!$conn){
 		//check  email and user if exist in databases
 
 		$sql = "SELECT  * FROM user WHERE username='".$username."' OR email='".$email."'limit 1";
-		//$sql = "SELECT  * FROM user WHERE username='".$username."' AND password='".$password."'limit 1";
-		echo $sql;
 
 		$result = mysqli_query($conn, $sql);
 		$resultcheck = mysqli_num_rows($result);
@@ -59,11 +57,6 @@ if (!$conn){
 			if(empty($password)){
 				$password_err="champ obligatoir";
 				}
-			else if(!preg_match('/^(?=.*\d)(?=.*[A-Za-z])[0-9A-Za-z!@#$%]{8,12}$/',htmlspecialchars($password))){
-
-				$password_err="a password must be 9 characters including 1 uppercase letter
-								, 1 special character and alphanumeric characters?";
-			}
 			else{
 				$password_err = "password valid";
 				$valid++;
@@ -71,13 +64,7 @@ if (!$conn){
 
 				//PasswordConf
 			if(empty($passwordConf)){
-				$passwordConf_err="champ obligatoir";
-				}
-			else if(!preg_match('/^(?=.*\d)(?=.*[A-Za-z])[0-9A-Za-z!@#$%]{8,12}$/',htmlspecialchars($passwordConf))){
-
-				$passwordConf_err="a password must be 9 characters including 1 uppercase letter, 
-									1 special character and alphanumeric characters?";
-
+					$passwordConf_err="champ obligatoir";
 			}
 			else if($passwordConf != $password){
 				$passwordConf_err="erreur password is not same";
@@ -88,7 +75,7 @@ if (!$conn){
 				}
 }
 //validation tu fomulaire:
-if($valid == 5){
+if($valid == 4){
 	header("location: index.php");
 	
 		$_SESSION["key"] = $_POST;

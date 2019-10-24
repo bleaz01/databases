@@ -1,47 +1,3 @@
-<?php
-	session_start();
-	include "assets/include/db.php";
-	$logoutNone='d-none';
-	if(isset($_POST['Logout'])){
-		$_SESSION = array();
-		session_destroy();
-		$logoutNone = "d-none";
-		}
-	
-		if(isset($_POST["sign"])){ 
-
-
-		$username = $_POST['login'] ;
-		$password = $_POST['password'];
-
-		// Login valided
-
-		$sql = "SELECT  * FROM user WHERE username='".$username."'limit 1";
-
-		$result = mysqli_query($conn, $sql);
-		$resultcheck = mysqli_num_rows($result);
-		
-		if ($resultcheck == 1){
-				while($row = mysqli_fetch_assoc($result)){
-				
-					if (password_verify($password, $row['password'])) {
-					
-						$logoutNone="";
-						$display_none = "d-none";
-						$username1 = $row['username'];
-						
-					} else {
-						echo 'Le mot de passe est invalide.';
-					}	
-				}	
-		} else {
-			echo "password ou login et pas correct";
-		} 
-}	
-
-?>
-<?php	include "assets/include/header.php"; ?>
-<body>
 	<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
 		<a class="navbar-brand" href="#">Home</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
@@ -76,4 +32,4 @@
 
 		</div>
 	</nav>
-<?php include "assets/include/footer.php";?>
+

@@ -1,10 +1,10 @@
 <?php 
-
-include "assets/include/header.php";
+Session_start();
 include "assets/include/controle_form.php";
 
 
 ?>
+<?php include "assets/include/header.php";?>
 	<body>
 	<form method="POST" action="">
 		<div class="form-group">
