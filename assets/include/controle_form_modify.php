@@ -11,10 +11,10 @@ if(isset($_POST['modify'])){
 	$email = $_POST['email'];
 	$password = crypt($_POST['password']);
 	$passwordConf = $_POST['passwordConf'];
-	$last_name = $_POST['Last_name'];
-	$first_name =$_POST['First_name'];
-	$github = $_POST['Github'];
-	$linkedin = $_POST['Linkedin'];
+	$last_name = $_POST['last_name'];
+	$first_name =$_POST['first_name'];
+	$github = $_POST['github'];
+	$linkedin = $_POST['linkedin'];
 
 			//last_name:
 			if(empty($last_name)){
@@ -85,13 +85,29 @@ if(isset($_POST['modify'])){
 
 //modify form:
 
-if($valid == 6){
+if($valid > 0){
 	
-		//$sql = "SELECT  * FROM user WHERE username='".$username."' OR email='".$email."'limit 1";
+			$sql = "UPDATE user SET username ='".$username."', email='".$email."',
+				last_name='".$last_name."', first_name='".$first_name."' ,
+				github='".$github."', linkedin='".$linkedin."' WHERE id='".$_SESSION['id']."'";
+
 		
-		$resul	= mysql_query($conn, "select * from user where id='5'");
 
+// "UPDATE MyGuests SET lastname='Doe' WHERE id=2";
 
+			if (mysqli_query($conn, $sql)) {
+				$_SESSION['username'] = $username;
+				$_SESSION['email'] = $email;
+				$_SESSION['first_name'] = $first_name;
+				$_SESSION['last_name'] = $last_name; 
+				$_SESSION['linkedin'] = $linkedin;
+				$_SESSION['github'] = $github; 
+				
+				header('Location: index.php');
+
+			} else {
+				echo "Error updating record: " . mysqli_error($conn);
+			}
 		//$result = mysqli_query($conn, $sql);
 		//$resultcheck = mysqli_num_rows($result);
 	
