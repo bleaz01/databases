@@ -1,29 +1,3 @@
-<?php
-	session_start();
-	include "assets/include/db.php";
-	include "assets/include/controle_form_modify.php";
-
-
-		$logoutNone='d-none';
-	if(isset($_POST['Logout'])){
-		$_SESSION = array();
-		session_destroy();
-		$logoutNone = "d-none";
-		header('Location: index.php');
-		}
-
-		if(isset($_POST['delete'])){
-			
-			$sql = "DELETE FROM user WHERE id='".$_SESSION['id']."'";
-			mysqli_query($conn,$sql);
-			$_SESSION = array();
-			session_destroy();
-			header('Location: index.php');
-		}
-
-
-?>
-<?php include "assets/include/header.php" ?>
 	<body>
 		<header class="mb-5">
 			<?php include "assets/include/nav.php" ?>
@@ -63,5 +37,3 @@
 				<button type="submit" class="btn btn-primary" name="delete" >delete account</button>
 			</form>
 
-
-<?php include "assets/include/footer.php" ?>

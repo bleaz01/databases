@@ -47,6 +47,7 @@
 		} else {
 			$text ="text-danger ";
 		} 
+
 }	
 
 ?>
@@ -55,10 +56,10 @@
 	<header>
 		<?php
 			if($_SESSION['open'] == true){
-				include "assets/include/nav_in.php";
+				include "assets/include/nav_login.php";
 			}
 			else{
-				include "assets/include/nav.php";
+				include "assets/include/nav_logout.php";
 				}
 		?>
 	</header>
